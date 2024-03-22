@@ -6,7 +6,7 @@
 
 <body>
     <div id="login">
-        
+
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
@@ -15,11 +15,11 @@
                             <h3 class="text-center text-info">Login</h3>
                             <div class="form-group">
                                 <label for="username" class="text-info">Usuário:</label><br>
-                                <input type="text" name="txtusuario" id="txtusuario" class="form-control"  required="">
+                                <input type="text" name="txtusuario" id="txtusuario" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Senha:</label><br>
-                                <input type="text" name="txtsenha" id="txtsenha" class="form-control" required="">
+                                <input type="text" name="txtsenha" id="txtsenha" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="remember-me" class="text-info"><span>Lembrar-me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
@@ -34,11 +34,20 @@
             </div>
             <p align = "center" class="text-light mt-2">
                 <%
-            String nome = request.getParameter("txtusuario");
-            int idade = 27;
-            
-            out.print(nome);
-            %>
+                    String usuario = request.getParameter("txtusuario");
+                    String senha = request.getParameter("txtsenha");
+
+                    if (usuario == null || senha == null) {
+                        out.print("Preencha os dados");
+                    } else {
+                        if (usuario.equals("Hugo") && senha.equals("123")) {
+                            response.sendRedirect("usuarios.jsp");
+                        } else {
+                            out.print("Dados incorretos");
+                        }
+
+
+                %>
             </p>
         </div>
     </div>

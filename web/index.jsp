@@ -1,8 +1,16 @@
+<%@page import="java.sql.*"%>
+
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link href="css/estilo.css" rel = "stylesheet">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
+
+<%
+   Connection con = null;
+   Statement st = null;
+   ResultSet rs = null;
+%>
 
 <body>
     <div id="login">
@@ -34,6 +42,11 @@
             </div>
             <p align = "center" class="text-light mt-2">
                 <%
+                    
+                    con = DriverManager.getConnection("jdbc:mysql://localhost/javaweb?user=root&password=");
+                    st = con.createStatement();
+                    rs = st.executeQuery("");
+                    
                     String usuario = request.getParameter("txtusuario");
                     String senha = request.getParameter("txtsenha");
 

@@ -45,14 +45,19 @@
                     String usuario = request.getParameter("txtusuario");
                     String senha = request.getParameter("txtsenha");
                     
+                    String user = "", pass = "";
+                    
                     try {
-                            Class.forName("com.mysql.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost/javaweb?user=root&password=");
+                            Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost/javaweb?useTimezone=true&serverTimezone=UTC&user=root&password=");
                     st = con.createStatement();
-                    rs = st.executeQuery("SELECT * FROM usuarios");
+                    rs = st.executeQuery("SELECT * FROM usuarios = '"+usuario+"' and senha  = '"+senha+"' ");
                     
                     while(rs.next()){
-                    out.print(rs.getString(2));
+                    
+                    user = rs.getString(3);
+                    pass = rs.getString(4);
+                    out.print(user);
                     }
                         } catch (Exception e) {
                         out.print(e);
@@ -64,13 +69,13 @@
                     if (usuario == null || senha == null) {
                         out.print("Preencha os dados");
                     } else {
-                        if (usuario.equals("Hugo") && senha.equals("123")) {
+                        if (usuario.equals(user) && senha.equals(pass)) {
                             response.sendRedirect("usuarios.jsp");
                         } else {
                             out.print("Dados incorretos");
                         }
 
-
+                    }
                 %>
             </p>
         </div>

@@ -1,5 +1,5 @@
 <%@page import="java.sql.*"%>
-
+<%@page import="com.mysql.jdbc.Driver"%>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link href="css/estilo.css" rel = "stylesheet">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -42,13 +42,24 @@
             </div>
             <p align = "center" class="text-light mt-2">
                 <%
-                    
-                    con = DriverManager.getConnection("jdbc:mysql://localhost/javaweb?user=root&password=");
-                    st = con.createStatement();
-                    rs = st.executeQuery("");
-                    
                     String usuario = request.getParameter("txtusuario");
                     String senha = request.getParameter("txtsenha");
+                    
+                    try {
+                            Class.forName("com.mysql.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost/javaweb?user=root&password=");
+                    st = con.createStatement();
+                    rs = st.executeQuery("SELECT * FROM usuarios");
+                    
+                    while(rs.next()){
+                    out.print(rs.getString(2));
+                    }
+                        } catch (Exception e) {
+                        out.print(e);
+                    }
+                        
+                    
+                    
 
                     if (usuario == null || senha == null) {
                         out.print("Preencha os dados");

@@ -44,32 +44,37 @@
                 <%
                     String usuario = request.getParameter("txtusuario");
                     String senha = request.getParameter("txtsenha");
+                    String nomeUsuario = "";
                     
                     String user = "", pass = "";
-                    
+                    int i = 0;
                     try {
-                            Class.forName("com.mysql.cj.jdbc.Driver");
+                    Class.forName("com.mysql.cj.jdbc.Driver");
                     con = DriverManager.getConnection("jdbc:mysql://localhost/javaweb?useTimezone=true&serverTimezone=UTC&user=root&password=");
-                    st = con.createStatement();
-                    rs = st.executeQuery("SELECT * FROM usuarios = '"+usuario+"' and senha  = '"+senha+"' ");
+                    st = con.createStatement();//aqui tenta comunicar com o banco de dados
+                    rs = st.executeQuery("SELECT * FROM usuarios = '"+usuario+"' and senha  = '"+senha+"' ");//aqui executa
                     
                     while(rs.next()){
                     
                     user = rs.getString(3);
                     pass = rs.getString(4);
-                    out.print(user);
+                    nomeUsuario = rs.getString(2);//nome do usuario vai receber o que está na coluna 2
+                    rs.last();//executando o ultimo registro
+                    i = rs.getRow();//passando a ultima linha para o contador
+                    
                     }
                         } catch (Exception e) {
                         out.print(e);
                     }
                         
                     
-                    
+                   
 
                     if (usuario == null || senha == null) {
                         out.print("Preencha os dados");
                     } else {
-                        if (usuario.equals(user) && senha.equals(pass)) {
+                        if (i>0) {
+                        session.setAttribute("nomeUsuario", nomeUsuario);
                             response.sendRedirect("usuarios.jsp");
                         } else {
                             out.print("Dados incorretos");

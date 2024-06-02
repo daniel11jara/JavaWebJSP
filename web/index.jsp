@@ -1,5 +1,6 @@
 <%@page import="java.sql.*"%>
 <%@page import="com.mysql.jdbc.Driver"%>
+<%@page import="config.Conexao"%>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link href="css/estilo.css" rel = "stylesheet">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -7,9 +8,9 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <%
-   Connection con = null;
-   Statement st = null;
-   ResultSet rs = null;
+
+    Statement st = null;
+    ResultSet rs = null;
 %>
 
 <body>
@@ -45,42 +46,39 @@
                     String usuario = request.getParameter("txtusuario");
                     String senha = request.getParameter("txtsenha");
                     String nomeUsuario = "";
-                    
+
                     String user = "", pass = "";
                     int i = 0;
+
                     try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost/javaweb?useTimezone=true&serverTimezone=UTC&user=root&password=");
-                    st = con.createStatement();//aqui tenta comunicar com o banco de dados
-                    rs = st.executeQuery("SELECT * FROM usuarios = '"+usuario+"' and senha  = '"+senha+"' ");//aqui executa
-                    
-                    while(rs.next()){
-                    
-                    user = rs.getString(3);
-                    pass = rs.getString(4);
-                    nomeUsuario = rs.getString(2);//nome do usuario vai receber o que está na coluna 2
-                    rs.last();//executando o ultimo registro
-                    i = rs.getRow();//passando a ultima linha para o contador
-                    
-                    }
-                        } catch (Exception e) {
+                        st = new Conexao().conectar().createStatement();
+                        rs = st.executeQuery("SELECT * FROM usuario where usuario = '" + usuario + "' and senha  = '" + senha + "' ");//aqui executa
+
+                        while (rs.next()) {
+
+                            user = rs.getString(3);
+                            pass = rs.getString(4);
+                            nomeUsuario = rs.getString(2);//nome do usuario vai receber o que está na coluna 2
+                            rs.last();//executando o ultimo registro
+                            i = rs.getRow();//passando a ultima linha para o contador
+
+                        }
+                    } catch (Exception e) {
                         out.print(e);
                     }
-                        
-                    
-                   
 
                     if (usuario == null || senha == null) {
                         out.print("Preencha os dados");
                     } else {
-                        if (i>0) {
-                        session.setAttribute("nomeUsuario", nomeUsuario);
+                        if (i > 0) {
+                            session.setAttribute("nomeUsuario", nomeUsuario);
                             response.sendRedirect("usuarios.jsp");
                         } else {
                             out.print("Dados incorretos");
                         }
 
                     }
+
                 %>
             </p>
         </div>

@@ -79,10 +79,10 @@
             <table class="table table-sm table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Usuário</th>
-                        <th scope="col">Senha</th>
-                        <th scope="col">Nível</th>
+                        <th scope="col">Nome:</th>
+                        <th scope="col">Usuário:</th>
+                        <th scope="col">Senha:</th>
+                        <th scope="col">Nível:</th>
                     </tr>
                 </thead>
                 <tbody>

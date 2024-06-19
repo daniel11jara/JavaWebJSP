@@ -11,3 +11,8 @@ dependencies {
     
     testImplementation     'junit:junit:4.13'
 }
+
+dependencies {
+    implementation 'mysql:mysql-connector-java:8.0.26'
+}
+
